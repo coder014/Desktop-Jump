@@ -80,8 +80,10 @@ int main()
 	HWND hwndSysListView32=FindWindowEx(hwndSHELLDLL_DefView,NULL,"SysListView32","FolderView");
 	int Nm=ListView_GetItemCount(hwndSysListView32);
 	CreateThread(NULL,0,mouse,NULL,0,0);
-	W=GetSystemMetrics(SM_CXFULLSCREEN);
-	H=GetSystemMetrics(SM_CYFULLSCREEN);
+	HWND hDW=GetDesktopWindow();
+	HDC hDC=GetWindowDC(hDW);
+	W=GetDeviceCaps(hDC,DESKTOPHORZRES);
+	H=GetDeviceCaps(hDC,DESKTOPVERTRES);
 	srand(time(NULL));
 	int ox=W/16,oy=H/2;
 	center=rand()%(Nm-GS)+1;
