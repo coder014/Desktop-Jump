@@ -1,20 +1,20 @@
 #include<windows.h>
 #include<commctrl.h>
-#include<ctime>
-#include<cstdlib>
-#include<cstdio>
+#include<time.h>
+#include<stdlib.h>
+#include<stdio.h>
 #define KEY_DOWN(VK_NONAME) ((GetAsyncKeyState(VK_NONAME)&0x8000)?1:0)
 #define abs(a,b) ((a)>(b)?(a)-(b):(b)-(a))
 using namespace std;
 
-const bool AI=false;
-const double g=12.;
-const int UP=11;
+const bool AI=false;	//AI mode
+const double g=12.;		//gravity constant
+const int UP=11;		//jump constant 1
 const int BIG=9000;
-const double JUMP=1.2;
+const double JUMP=1.2;	//jump constant 2
 const int size=50;
 const int K=100;
-int SPEED=8;
+int SPEED=8;			//scroll speed
 const int GS=1;
 
 double v=0;
@@ -34,15 +34,15 @@ void jump()
 
 DWORD WINAPI mouse(LPVOID args)
 {
-	bool qwe;
+	bool Key_ev;
 	while(true)
 	{
-		qwe=KEY_DOWN(MOUSE_MOVED);
+		Key_ev=KEY_DOWN(MOUSE_MOVED);
 		while(!playing)
 			Sleep(20);
-		if(!qwe&&an) 
+		if(!Key_ev&&an) 
 			an=false;
-		else if(!an&&qwe)
+		else if(!an&&Key_ev)
 		{
 			an=true;
 			jump();
@@ -66,11 +66,11 @@ bool ai(int x,int y,int ox,int oy)
 
 int main()
 {
-	HWND hwndParent=FindWindow("Progman","Program Manager");
+	HWND hwndParent=FindWindow("Progman","Program Manager"); //for win xp
 	HWND hwndSHELLDLL_DefView=FindWindowEx(hwndParent,NULL,"SHELLDLL_DefView",NULL);
 	if(hwndSHELLDLL_DefView==NULL)
 	{
-		hwndParent=FindWindowEx(NULL,NULL,"WorkerW",NULL);
+		hwndParent=FindWindowEx(NULL,NULL,"WorkerW",NULL);   //for win 7,8,10
 		while ((!hwndSHELLDLL_DefView)&&hwndParent)
 		{
 			hwndSHELLDLL_DefView=FindWindowEx(hwndParent,NULL,"SHELLDLL_DefView",NULL);
@@ -111,7 +111,7 @@ int main()
 			{
 				playing=false;
 				sprintf(tmp,"您得了%d分",sc);
-				int ret=MessageBox(NULL,tmp,"大佬",MB_RETRYCANCEL);
+				int ret=MessageBox(NULL,tmp,"提示",MB_RETRYCANCEL);
 				if(ret==IDCANCEL)
 					return 0;
 				tx=W/16*15;
