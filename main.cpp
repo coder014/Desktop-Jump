@@ -84,6 +84,7 @@ int main()
 	HDC hDC=GetWindowDC(hDW);
 	W=GetDeviceCaps(hDC,DESKTOPHORZRES);
 	H=GetDeviceCaps(hDC,DESKTOPVERTRES);
+	ReleaseDC(hDC);
 	srand(time(NULL));
 	int ox=W/16,oy=H/2;
 	center=rand()%(Nm-GS)+1;
@@ -110,8 +111,8 @@ int main()
 			if((abs(ox,tx)<size&&(oy<=s*center||oy>=s*center+2*K-size))||(oy>=(Nm-2)*s+2*K))
 			{
 				playing=false;
-				sprintf(tmp,"ƒ˙µ√¡À%d∑÷",sc);
-				int ret=MessageBox(NULL,tmp,"Ã· æ",MB_RETRYCANCEL);
+				sprintf(tmp,"ÊÇ®Âæó‰∫Ü%dÂàÜ",sc);
+				int ret=MessageBox(NULL,tmp,"ÊèêÁ§∫",MB_RETRYCANCEL);
 				if(ret==IDCANCEL)
 					return 0;
 				tx=W/16*15;
